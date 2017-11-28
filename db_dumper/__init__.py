@@ -1,7 +1,5 @@
 """Load and dump databases to disk."""
 
-from attr import asdict
-
 
 def load(source, classes):
     """Load 0 or more objects from source and instantiate them with the classes
@@ -18,16 +16,14 @@ def load(source, classes):
     return objects
 
 
-def dump(objects, dump_object=None):
+def dump(objects, f):
     """Return a dictionary suitable for loading with the load function. Objects
-    will be dumped with attr.asdict if dump_object is None."""
+    will be dumped with the f function."""
     d = {}
-    if dump_object is None:
-        dump_object = asdict
     for obj in objects:
         name = obj.__class__.__name__
         d[name] = d.get(name, [])
-        d[name].append(dump_object(obj))
+        d[name].append(f(obj))
     return d
 
 
