@@ -99,3 +99,9 @@ ENV/
 
 # mypy
 .mypy_cache/
+world*
+*.pem
+.pytest_cache
+*.sqlite3*
+AUTHORS
+ChangeLog

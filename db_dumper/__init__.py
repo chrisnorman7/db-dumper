@@ -1,18 +1,21 @@
 """Load and dump databases to disk."""
 
 
-def load(source, classes):
+def load(source, classes, save=None):
     """Load 0 or more objects from source and instantiate them with the classes
     found in the classes iterable. They will be returned as a list which can be
-    passed to session.add_all for example. No saving will be performed. Pass a
-    dictionary as source with name: list-of-dictionaries as pairs."""
+    passed to session.add_all for example. No saving will be performed unless
+    save is not None, in which case save(object) will be called for every
+    created object. Pass a dictionary as source with name: list-of-dictionaries
+    as pairs."""
     objects = []  # All the created objects.
-    classes = {x.__name__: x for x in classes}
-    for name, data in source.items():
-        cls = classes[name]
-        for datum in data:
+    for cls in classes:
+        for data in source[cls.__name__]:
             # Let's load.
-            objects.append(cls(**datum))
+            obj = cls(**data)
+            if save is not None:
+                save(obj)
+            objects.append(obj)
     return objects
 
 

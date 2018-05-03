@@ -1,4 +1,13 @@
+from pytest import raises
 from db_dumper import load, dump
+
+
+class Save(Exception):
+    pass
+
+
+def save(obj):
+    raise Save()
 
 
 def dump_object(obj):
@@ -37,3 +46,11 @@ def test_load():
     loaded_me, loaded_dog = objects
     assert loaded_me == me
     assert loaded_dog == dog
+
+
+def test_save():
+    o = DummyObject('Chris', 28)
+    objects = [o]
+    data = dump(objects, dump_object)
+    with raises(Save):
+        load(data, [DummyObject], save=save)
