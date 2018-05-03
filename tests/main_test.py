@@ -48,12 +48,12 @@ def test_load():
     assert loaded_dog == dog
 
 
-def test_save():
+def test_object_save():
     o = DummyObject('Chris', 28)
     objects = [o]
     data = dump(objects, dump_object)
     with raises(Save):
-        load(data, [DummyObject], save=save)
+        load(data, [DummyObject], object_save=save)
 
 
 def test_no_objects():
