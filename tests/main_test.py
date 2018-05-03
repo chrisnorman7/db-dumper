@@ -54,3 +54,8 @@ def test_save():
     data = dump(objects, dump_object)
     with raises(Save):
         load(data, [DummyObject], save=save)
+
+
+def test_no_objects():
+    objects = load({}, [DummyObject])
+    assert not objects

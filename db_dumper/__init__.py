@@ -10,7 +10,7 @@ def load(source, classes, save=None):
     as pairs."""
     objects = []  # All the created objects.
     for cls in classes:
-        for data in source[cls.__name__]:
+        for data in source.get(cls.__name__, []):
             # Let's load.
             obj = cls(**data)
             if save is not None:
